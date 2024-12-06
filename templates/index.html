@@ -38,7 +38,7 @@
             <div id="attractions">
                 <h3>Top 10 Attractions</h3>
                 <ul id="attractions-list">
-                    <li> Search for results </li>
+                    <li>Search for results</li>
                 </ul>
             </div>
 
@@ -46,7 +46,7 @@
             <div id="packing-list">
                 <h3>Packing Recommendations</h3>
                 <ul id="packing-list-items">
-                    <li> Search for results </li>
+                    <li>Search for results</li>
                 </ul>
             </div>
         </div>
@@ -83,27 +83,27 @@
             } else {
                 // Update weather
                 document.getElementById('temperature').innerText = `High: ${data.weather.daily.temperature_2m_max[0]}°C, Low: ${data.weather.daily.temperature_2m_min[0]}°C`;
-
-                // Set weather condition dynamically
-                const weatherCondition = data.weather.current_weather.weathercode; // Replace with actual condition from data
-                const weatherIconMap = {
-                    'clear': 'sunny-icon.png',
-                    'cloudy': 'cloudy-icon.png',
-                    'rain': 'rain-icon.png',
-                    // Add more mappings as needed
-                };
-                document.getElementById('conditions').innerText = "Condition: " + weatherCondition; // Replace with actual condition
-                document.getElementById('weather-icon').src = `/static/${weatherIconMap[weatherCondition]}`;
+                document.getElementById('conditions').innerText = "Condition: " + data.weather.daily.weathercode[0];
+                document.getElementById('weather-icon').src = "path/to/weather-icon.png";
 
                 // Update attractions
-                document.getElementById('attractions-list').innerHTML = data.attractions.map(attraction => `<li>${attraction}</li>`).join('');
+                if (data.attractions.length > 0) {
+                    document.getElementById('attractions-list').innerHTML = data.attractions.map(attraction => `<li>${attraction}</li>`).join('');
+                } else {
+                    document.getElementById('attractions-list').innerHTML = '<li>No attractions found</li>';
+                }
 
                 // Update packing list
-                document.getElementById('packing-list-items').innerHTML = data.packing_list.map(item => `<li>${item}</li>`).join('');
+                if (data.packing_list.length > 0) {
+                    document.getElementById('packing-list-items').innerHTML = data.packing_list.map(item => `<li>${item}</li>`).join('');
+                } else {
+                    document.getElementById('packing-list-items').innerHTML = '<li>No packing recommendations</li>';
+                }
             }
         });
     </script>
 </body>
 </html>
+
 
 

@@ -1,0 +1,168 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    color: #6c80e2;
+}
+
+form {
+    margin: 20px 0;
+}
+
+input[type="text"] {
+    padding: 10px;
+    width: 70%;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px 20px;
+    background: #6c80e2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #b9c6ff;
+}
+
+/* Weather Section */
+#weather {
+    margin-top: 30px;
+}
+
+#weather-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e3f2fd;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    animation: popUp 1s ease-out forwards;
+}
+
+#weather-icon {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+}
+
+#weather-info {
+    text-align: left;
+}
+
+#temperature {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+#conditions {
+    font-size: 18px;
+    margin: 0;
+}
+
+/* Results Sections */
+#results h3 {
+    margin-top: 30px;
+    color: #555;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Pop-up and Fade-in Animation for Results */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 2s forwards; /* 2 seconds duration */
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Results fade-in with pop-up effect */
+.result-item {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: popUp 0.8s ease-out forwards;
+}
+
+@keyframes popUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* List items */
+li {
+    margin: 5px 0;
+}
+
+/* Apply delay to each list item to stagger the pop-up effect */
+.result-item:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.result-item:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.result-item:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.result-item:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.result-item:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.result-item:nth-child(6) {
+    animation-delay: 0.6s;
+}
+
+.result-item:nth-child(7) {
+    animation-delay: 0.7s;
+}
+
+.result-item:nth-child(8) {
+    animation-delay: 0.8s;
+}
+
+.result-item:nth-child(9) {
+    animation-delay: 0.9s;
+}
+
+.result-item:nth-child(10) {
+    animation-delay: 1s;
+}
