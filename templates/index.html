@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderWeather</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to WanderWeather</h1>
+        <p>Plan smarter trips with weather, attractions, and packing tips!</p>
+
+        <!-- Form for entering the travel destination -->
+        <form id="location-form">
+            <input type="text" id="location" name="location" placeholder="Enter your destination" required>
+            <button type="submit">Get Info</button>
+        </form>
+
+        <!-- Loading Indicator -->
+        <div id="loading" style="display: none;">Loading...</div>
+
+        <!-- Results Section -->
+        <div id="results">
+            <!-- Weather Section -->
+            <div id="weather">
+                <h3>Weather</h3>
+                <div id="weather-card">
+                    <img id="weather-icon" src="" alt="Weather Icon">
+                    <div id="weather-info">
+                        <p id="temperature"></p>
+                        <p id="conditions"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Attractions Section -->
+            <div id="attractions">
+                <h3>Top 10 Attractions</h3>
+                <ul id="attractions-list">
+                    <li> Search for results </li>
+                </ul>
+            </div>
+
+            <!-- Packing List Section -->
+            <div id="packing-list">
+                <h3>Packing Recommendations</h3>
+                <ul id="packing-list-items">
+                    <li> Search for results </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Fetching Data -->
+    <script>
+        document.getElementById('location-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const location = document.getElementById('location').value;
+
+            // Show loading indicator
+            document.getElementById('loading').style.display = 'block';
+
+            // Send the location data to the backend
+            const response = await fetch('/get_data', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `location=${encodeURIComponent(location)}`
+            });
+
+            const data = await response.json();
+
+            // Hide loading indicator
+            document.getElementById('loading').style.display = 'none';
+
+            // Display results or error message
+            if (data.error) {
+                document.getElementById('temperature').innerText = data.error;
+                document.getElementById('conditions').innerText = "";
+                document.getElementById('weather-icon').src = "";
+                document.getElementById('attractions-list').innerHTML = '<li>No data available</li>';
+                document.getElementById('packing-list-items').innerHTML = '<li>No data available</li>';
+            } else {
+                // Update weather
+                document.getElementById('temperature').innerText = `High: ${data.weather.daily.temperature_2m_max[0]}°C, Low: ${data.weather.daily.temperature_2m_min[0]}°C`;
+
+                // Set weather condition dynamically
+                const weatherCondition = data.weather.current_weather.weathercode; // Replace with actual condition from data
+                const weatherIconMap = {
+                    'clear': 'sunny-icon.png',
+                    'cloudy': 'cloudy-icon.png',
+                    'rain': 'rain-icon.png',
+                    // Add more mappings as needed
+                };
+                document.getElementById('conditions').innerText = "Condition: " + weatherCondition; // Replace with actual condition
+                document.getElementById('weather-icon').src = `/static/${weatherIconMap[weatherCondition]}`;
+
+                // Update attractions
+                document.getElementById('attractions-list').innerHTML = data.attractions.map(attraction => `<li>${attraction}</li>`).join('');
+
+                // Update packing list
+                document.getElementById('packing-list-items').innerHTML = data.packing_list.map(item => `<li>${item}</li>`).join('');
+            }
+        });
+    </script>
+</body>
+</html>
+
+
